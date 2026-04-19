@@ -16,12 +16,14 @@ let siguienteId = 4;
 function crearAlumno(nombre, email, seccion) {
   const nuevoAlumno = {
     id: siguienteId,
-    nombre: nombre,
-    email: email,
-    seccion: seccion
+    nombre,
+    email,
+    seccion,
   };
+
   alumnos.push(nuevoAlumno);
-  siguienteId++;
+  siguienteId += 1;
+
   return nuevoAlumno;
 }
 
@@ -32,28 +34,38 @@ function listarAlumnos() {
 
 // 3) Obtener alumno por id
 function obtenerAlumnoPorId(id) {
-  return alumnos.find(alumno => alumno.id === id);
+  return alumnos.find((alumno) => alumno.id === id);
 }
 
 // 4) Actualizar alumno por id
 function actualizarAlumno(id, datosActualizados) {
   const alumno = obtenerAlumnoPorId(id);
-  
+
   if (!alumno) {
-    return null; 
+    return null;
   }
 
-  Object.assign(alumno, datosActualizados);
-  
+  if (datosActualizados.nombre !== undefined) {
+    alumno.nombre = datosActualizados.nombre;
+  }
+
+  if (datosActualizados.email !== undefined) {
+    alumno.email = datosActualizados.email;
+  }
+
+  if (datosActualizados.seccion !== undefined) {
+    alumno.seccion = datosActualizados.seccion;
+  }
+
   return alumno;
 }
 
 // 5) Eliminar alumno por id
 function eliminarAlumno(id) {
-  const indice = alumnos.findIndex(alumno => alumno.id === id);
-  
+  const indice = alumnos.findIndex((alumno) => alumno.id === id);
+
   if (indice === -1) {
-    return false; 
+    return false;
   }
 
   alumnos.splice(indice, 1);
@@ -184,6 +196,6 @@ async function ejecutarMenu() {
 ejecutarMenu();
 
 // Desafio extra opcional:
-// function buscarAlumnosPorSeccion(seccion) {
-//   //TODO
-// }
+function buscarAlumnosPorSeccion(seccion) {
+   return alumnos.filter((alumno) => alumno.seccion === seccion);
+}
